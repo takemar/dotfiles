@@ -10,6 +10,12 @@ alias grep='grep --color=auto'
 # PS1='[\u@\h \W]\$ '
 PS1='\[\e[30m\e[47m\][\u@\h \w]\[\e[m\]$ '
 
+{{ if .nvm }}
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+{{ end }}
+
 {{ if .rbenv }}
 eval "$(~/.rbenv/bin/rbenv init - bash)"
 {{ end }}

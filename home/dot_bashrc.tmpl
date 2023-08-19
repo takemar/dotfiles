@@ -23,3 +23,8 @@ eval "$(~/.rbenv/bin/rbenv init - bash)"
 {{ if .rustup }}
 . "$HOME/cargo/env"
 {{ end }}
+
+{{ $config := joinPath .chezmoi.configFile ".." ".bashrc" }}
+{{ if glob $config }}
+{{ include $config }}
+{{ end }}

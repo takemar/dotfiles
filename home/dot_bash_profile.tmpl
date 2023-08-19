@@ -14,3 +14,8 @@ test -r {{ $opamInit }} && . {{ $opamInit }} > /dev/null 2> /dev/null || true
 {{ if .rustup }}
 . "$HOME/cargo/env"
 {{ end }}
+
+{{ $config := joinPath .chezmoi.configFile ".." ".bash_profile" }}
+{{ if glob $config }}
+{{ include $config }}
+{{ end }}

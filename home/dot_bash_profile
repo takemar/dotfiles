@@ -4,6 +4,13 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+{{ if and .opam (lookPath "opam") }}
+{{ $opamroot := or (output "printenv" "OPAMROOT" | trim) (joinPath .chezmoi.homeDir ".opam") }}
+{{ $opamInit := joinPath $opamroot "opam-init" "init.sh" }}
+# opam configuration
+test -r {{ $opamInit }} && . {{ $opamInit }} > /dev/null 2> /dev/null || true
+{{ end }}
+
 {{ if .rustup }}
 . "$HOME/cargo/env"
 {{ end }}

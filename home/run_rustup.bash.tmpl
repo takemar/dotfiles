@@ -1,8 +1,7 @@
 {{ if .rustup -}}
 #!/usr/bin/env bash
 
-dest_dir="{{ .chezmoi.distDir }}"
-if ![ -f "${dest_dir%/}/.cargo/bin/rustup" ]; then
+if ![ -f "$HOME/.cargo/bin/rustup" ]; then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs/ | sh -s -- -y --no-modify-path
 fi
 {{ end }}

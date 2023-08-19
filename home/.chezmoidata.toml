@@ -1,2 +1,3 @@
 nvm = false
 rbenv = false
+rustup = false

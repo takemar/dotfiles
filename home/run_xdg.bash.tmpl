@@ -1,0 +1,29 @@
+{{ $destDir := or .chezmoi.config.destDir .chezmoi.homeDir -}}
+{{ $binDir := joinPath $destDir ".local" "bin" -}}
+{{ $existBinDir := glob $binDir -}}
+{{ $dataDir := joinPath $destDir ".local" "share" -}}
+{{ $existDataDir := glob $dataDir -}}
+{{ $configDir := joinPath $destDir ".config" -}}
+{{ $existConfigDir := glob $configDir -}}
+{{ $stateDir := joinPath $destDir ".local" "state" -}}
+{{ $existStateDir := glob $stateDir -}}
+{{ $cacheDir := joinPath $destDir ".cache" -}}
+{{ $existCacheDir := glob $cacheDir -}}
+{{ if not (and $existBinDir $existDataDir $existConfigDir $existStateDir $existCacheDir) -}}
+#!/usr/bin/env bash
+{{ if not $existBinDir }}
+mkdir -p "{{ $binDir }}"
+{{ end }}
+{{ if not $existDataDir }}
+mkdir -p "{{ $dataDir }}"
+{{ end }}
+{{ if not $existConfigDir }}
+mkdir -p "{{ $configDir }}"
+{{ end }}
+{{ if not $existStateDir }}
+mkdir -p "{{ $stateDir }}"
+{{ end }}
+{{ if not $existCacheDir }}
+mkdir -p "{{ $cacheDir }}"
+{{ end }}
+{{ end }}

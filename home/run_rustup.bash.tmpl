@@ -1,7 +1,5 @@
-{{ if .rustup -}}
+{{ if and .rustup (not (glob ".cargo/bin/rustup")) -}}
 #!/usr/bin/env bash
 
-if [ ! -f "$HOME/.cargo/bin/rustup" ]; then
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs/ | sh -s -- -y --no-modify-path
-fi
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs/ | sh -s -- -y --no-modify-path
 {{ end }}

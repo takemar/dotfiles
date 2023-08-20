@@ -10,10 +10,6 @@ alias grep='grep --color=auto'
 # PS1='[\u@\h \W]\$ '
 PS1='\[\e[30m\e[47m\][\u@\h \w]\[\e[m\]$ '
 
-chezmoi-cd() {
-    cd $(chezmoi source-path)
-}
-
 {{ if .nvm }}
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

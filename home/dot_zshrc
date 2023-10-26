@@ -10,3 +10,7 @@ zstyle :compinstall filename '/home/takemaro/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+
+autoload -Uz colors
+colors
+PROMPT="%{$fg_no_bold[black]$bg[white]%}[%n@%m %~]%{$reset_color%}$ "

@@ -2,3 +2,4 @@ nvm = false
 opam = false
 rbenv = false
 rustup = false
+zsh = false

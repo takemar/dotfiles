@@ -1,0 +1,33 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.zsh_history
+HISTSIZE=1000
+SAVEHIST=1000
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/takemaro/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+autoload -Uz colors
+colors
+PROMPT="%{$fg_no_bold[black]$bg[white]%}[%n@%m %~]%{$reset_color%}$ "
+
+{{ if .nvm }}
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+{{ end }}
+
+{{ if and .opam (lookPath "opam") }}
+{{ $opamroot := or (output "bash" "-c" "printenv OPAMROOT || true" | trim) (joinPath .chezmoi.homeDir ".opam") }}
+{{ $opamInit := joinPath $opamroot "opam-init" "init.zsh" }}
+# opam configuration
+[[ ! -r {{ $opamInit }} ]] || source {{ $opamInit }}  > /dev/null 2> /dev/null
+{{ end }}
+
+{{ if .rbenv }}
+eval "$(~/.rbenv/bin/rbenv init - zsh)"
+{{ end }}

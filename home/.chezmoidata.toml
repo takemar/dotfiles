@@ -1,3 +1,4 @@
+bash = true
 nvm = false
 opam = false
 rbenv = false

@@ -1,3 +1,4 @@
+{{ $destDir := or .chezmoi.config.destDir .chezmoi.homeDir }}
 # Lines configured by zsh-newuser-install
 {{ if not (eq .chezmoi.os "darwin") }}
 HISTFILE=~/.zsh_history
@@ -7,7 +8,7 @@ SAVEHIST=1000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/takemaro/.zshrc'
+zstyle :compinstall filename '{{ joinPath $destDir ".zshrc" }}'
 
 autoload -Uz compinit
 compinit

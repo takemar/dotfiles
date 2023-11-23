@@ -1,3 +1,8 @@
 {{ if .rustup }}
 . "$HOME/.cargo/env"
 {{ end }}
+
+{{ $config := joinPath .chezmoi.configFile ".." ".zshenv" }}
+{{ if glob $config }}
+{{ include $config }}
+{{ end }}

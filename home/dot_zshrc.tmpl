@@ -34,3 +34,8 @@ export NVM_DIR="$HOME/.nvm"
 {{ if .rbenv }}
 eval "$(~/.rbenv/bin/rbenv init - zsh)"
 {{ end }}
+
+{{ $config := joinPath .chezmoi.configFile ".." ".zshrc" }}
+{{ if glob $config }}
+{{ include $config }}
+{{ end }}

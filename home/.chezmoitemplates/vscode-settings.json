@@ -1,0 +1,23 @@
+{
+    "editor.fontFamily": "\"MyricaM M\", monospace",
+    "editor.fontSize": 16,
+    "editor.lineHeight": 18,
+    "editor.renderWhitespace": "boundary",
+    "editor.unicodeHighlight.nonBasicASCII": false,
+    "files.eol": "\n",
+    "files.watcherExclude": {
+        "**/vendor/bundle/**": true
+    },
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.editor.untitled.hint": "hidden",
+    "workbench.startupEditor": "none",
+    "[ruby]": {
+        "editor.tabSize": 2
+    },
+    "[typescript]": {
+        "editor.tabSize": 2
+    },
+    "[typescriptreact]": {
+        "editor.tabSize": 2
+    }
+}

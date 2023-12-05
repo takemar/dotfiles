@@ -3,4 +3,5 @@ nvm = false
 opam = false
 rbenv = false
 rustup = false
+vscode = false
 zsh = false

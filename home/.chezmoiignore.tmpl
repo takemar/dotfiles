@@ -1,3 +1,18 @@
+{{ if eq .chezmoi.os "windows" }}
+*
+!AppData
+{{ if not .vscode }}
+AppData/Roaming/Code/User/settings.json
+{{ end }}
+{{ else }}
+AppData
+{{ if eq .chezmoi.os "darwin" }}
+{{ if not .vscode }}
+Library/Application Support/Code/User/settings.json
+{{ end }}
+{{ else }}
+Library
+{{ end }}
 {{ if not .bash }}
 .bash_profile
 .bashrc
@@ -6,4 +21,5 @@
 .zprofile
 .zshenv
 .zshrc
+{{ end }}
 {{ end }}

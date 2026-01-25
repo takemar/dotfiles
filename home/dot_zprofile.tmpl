@@ -1,0 +1,6 @@
+[[ -f ~/.profile ]] && . ~/.profile
+
+{{ $config := joinPath .chezmoi.configFile ".." ".zprofile" }}
+{{ if glob $config }}
+{{ include $config }}
+{{ end }}

@@ -1,5 +1,6 @@
 bash = true
 bitwarden_ssh_agent = false
+deno = false
 nvm = false
 opam = false
 rbenv = false

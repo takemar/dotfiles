@@ -1,3 +1,5 @@
+{{ $destDir := or .chezmoi.config.destDir .chezmoi.homeDir -}}
+
 export PATH="$HOME/.local/bin:$PATH"
 
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -7,6 +9,10 @@ export XDG_CACHE_HOME="$HOME/.cache"
 
 {{ if .bitwarden_ssh_agent }}
 export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+{{ end }}
+
+{{ if .deno }}
+. "{{ joinPath $destDir ".deno" "env" }}"
 {{ end }}
 
 {{ if .rustup }}

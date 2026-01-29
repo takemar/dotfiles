@@ -1,3 +1,5 @@
+{{ $destDir := or .chezmoi.config.destDir .chezmoi.homeDir -}}
+
 #
 # ~/.bashrc
 #
@@ -9,6 +11,10 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 # PS1='[\u@\h \W]\$ '
 PS1='\[\e[30m\e[47m\][\u@\h \w]\[\e[m\]$ '
+
+{{ if .deno }}
+. "{{ joinPath $destDir ".deno" "env" }}"
+{{ end }}
 
 {{ if .nvm }}
 export NVM_DIR="$HOME/.nvm"

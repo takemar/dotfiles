@@ -1,4 +1,5 @@
-{{ $destDir := or .chezmoi.config.destDir .chezmoi.homeDir }}
+{{ $destDir := or .chezmoi.config.destDir .chezmoi.homeDir -}}
+
 # Lines configured by zsh-newuser-install
 {{ if not (eq .chezmoi.os "darwin") }}
 HISTFILE=~/.zsh_history
@@ -17,6 +18,10 @@ compinit
 autoload -Uz colors
 colors
 PROMPT="%{$fg_no_bold[black]$bg[white]%}[%n@%m %~]%{$reset_color%}$ "
+
+{{ if .deno }}
+. "{{ joinPath $destDir ".deno" "env" }}"
+{{ end }}
 
 {{ if .nvm }}
 export NVM_DIR="$HOME/.nvm"

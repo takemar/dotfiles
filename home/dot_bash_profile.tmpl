@@ -1,3 +1,5 @@
+{{ $destDir := or .chezmoi.config.destDir .chezmoi.homeDir -}}
+
 #
 # ~/.bash_profile
 #
@@ -5,6 +7,10 @@
 [[ -f ~/.profile ]] && . ~/.profile
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+{{ if .deno }}
+. "{{ joinPath $destDir ".deno" "env" }}"
+{{ end }}
 
 {{ if and .opam (lookPath "opam") }}
 {{ $opamroot := or (output "bash" "-c" "printenv OPAMROOT || true" | trim) (joinPath .chezmoi.homeDir ".opam") }}

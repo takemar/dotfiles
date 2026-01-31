@@ -7,7 +7,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
-{{ if .bitwarden_ssh_agent }}
+{{ if .bitwarden }}
 export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
 {{ end }}
 

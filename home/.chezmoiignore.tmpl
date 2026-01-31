@@ -17,6 +17,9 @@ Library
 .bash_profile
 .bashrc
 {{ end }}
+{{ if not .ssh }}
+.ssh
+{{ end }}
 {{ if not .zsh }}
 .zprofile
 .zshenv

@@ -1,0 +1,32 @@
+{{ if and .bitwarden .ssh -}}
+#!/usr/bin/env bash
+
+{{ $destDir := or .chezmoi.config.destDir .chezmoi.homeDir -}}
+
+{{ if not (glob ".ssh/config.d") }}
+mkdir -p {{ joinPath $destDir ".ssh/config.d" }}
+{{ end }}
+
+{{ range $host, $element := .ssh }}
+{{ $pubKeyPath := joinPath $destDir ".ssh" (printf "%s.pub" $host) }}
+{{ if not (glob $pubKeyPath) }}
+echo "{{ printf "%s %s" (bitwarden "item" $host).sshKey.publicKey $host }}" > "{{ $pubKeyPath }}"
+{{ end }}
+{{ $configPath := joinPath $destDir ".ssh" "config.d" $host }}
+{{ if not (glob $configPath) }}
+cat << '{{ $host }}' > "{{ $configPath }}"
+Host "{{ $host }}"
+    IdentityFile "{{ $pubKeyPath }}"
+{{ $bitwardenFields := bitwardenFields "item" $host}}
+{{ range $key, $value := $element }}
+{{ if not (index $bitwardenFields (camelcase $key)) }}
+    {{ camelcase $key }} "{{ $value }}"
+{{ end }}
+{{ end }}
+{{ range $key, $field := $bitwardenFields }}
+    {{ $key }} "{{ $field.value }}"
+{{ end }}
+{{ $host }}
+{{ end }}
+{{ end }}
+{{ end }}

@@ -1,9 +1,10 @@
 bash = true
-bitwarden_ssh_agent = false
+bitwarden = false
 deno = false
 nvm = false
 opam = false
 rbenv = false
 rustup = false
+ssh = false
 vscode = false
 zsh = false

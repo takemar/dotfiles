@@ -1,19 +1,31 @@
 {{ if and .bitwarden .ssh -}}
-#!/usr/bin/env bash
+{{ $shebang := false -}}
 
 {{ $destDir := or .chezmoi.config.destDir .chezmoi.homeDir -}}
 
-{{ if not (glob ".ssh/config.d") }}
-mkdir -p {{ joinPath $destDir ".ssh/config.d" }}
+{{ if not (glob ".ssh/config.d") -}}
+{{ if not $shebang -}}
+{{ $shebang = true -}}
+#!/usr/bin/env bash
 {{ end }}
+mkdir -p {{ joinPath $destDir ".ssh/config.d" }}
+{{ end -}}
 
-{{ range $host, $element := .ssh }}
-{{ $pubKeyPath := joinPath $destDir ".ssh" (printf "%s.pub" $host) }}
-{{ if not (glob $pubKeyPath) }}
+{{ range $host, $element := .ssh -}}
+{{ $pubKeyPath := joinPath $destDir ".ssh" (printf "%s.pub" $host) -}}
+{{ if not (glob $pubKeyPath) -}}
+{{ if not $shebang -}}
+{{ $shebang = true -}}
+#!/usr/bin/env bash
+{{ end }}
 (umask 077; echo "{{ printf "%s %s" (bitwarden "item" (printf "ssh://%s" $host)).sshKey.publicKey $host }}" > "{{ $pubKeyPath }}")
 {{ end }}
-{{ $configPath := joinPath $destDir ".ssh" "config.d" $host }}
-{{ if not (glob $configPath) }}
+{{ $configPath := joinPath $destDir ".ssh" "config.d" $host -}}
+{{ if not (glob $configPath) -}}
+{{ if not $shebang -}}
+{{ $shebang = true -}}
+#!/usr/bin/env bash
+{{ end }}
 cat << '{{ $host }}' > "{{ $configPath }}"
 Host "{{ $host }}"
     IdentityFile "{{ $pubKeyPath }}"
@@ -27,6 +39,6 @@ Host "{{ $host }}"
     {{ $key }} "{{ $field.value }}"
 {{ end }}
 {{ $host }}
-{{ end }}
-{{ end }}
-{{ end }}
+{{ end -}}
+{{ end -}}
+{{ end -}}

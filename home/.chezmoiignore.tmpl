@@ -1,6 +1,12 @@
 {{ if eq .chezmoi.os "windows" }}
 *
 !AppData
+{{ if and .bitwarden .ssh }}
+!Update-DotSSH.ps1
+{{ end }}
+{{ if .ssh}}
+!.ssh
+{{ end }}
 {{ if not .vscode }}
 AppData/Roaming/Code/User/settings.json
 {{ end }}

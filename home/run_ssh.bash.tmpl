@@ -10,14 +10,14 @@ mkdir -p {{ joinPath $destDir ".ssh/config.d" }}
 {{ range $host, $element := .ssh }}
 {{ $pubKeyPath := joinPath $destDir ".ssh" (printf "%s.pub" $host) }}
 {{ if not (glob $pubKeyPath) }}
-echo "{{ printf "%s %s" (bitwarden "item" $host).sshKey.publicKey $host }}" > "{{ $pubKeyPath }}"
+(umask 077; echo "{{ printf "%s %s" (bitwarden "item" (printf "ssh://%s" $host)).sshKey.publicKey $host }}" > "{{ $pubKeyPath }}")
 {{ end }}
 {{ $configPath := joinPath $destDir ".ssh" "config.d" $host }}
 {{ if not (glob $configPath) }}
 cat << '{{ $host }}' > "{{ $configPath }}"
 Host "{{ $host }}"
     IdentityFile "{{ $pubKeyPath }}"
-{{ $bitwardenFields := bitwardenFields "item" $host}}
+{{ $bitwardenFields := bitwardenFields "item" (printf "ssh://%s" $host) }}
 {{ range $key, $value := $element }}
 {{ if not (index $bitwardenFields (camelcase $key)) }}
     {{ camelcase $key }} "{{ $value }}"

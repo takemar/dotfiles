@@ -1,9 +1,7 @@
 {{ if eq .chezmoi.os "windows" }}
 *
 !AppData
-{{ if and .bitwarden .ssh }}
-!Update-DotSSH.ps1
-{{ end }}
+!*.ps1
 {{ if .ssh}}
 !.ssh
 {{ end }}
@@ -12,6 +10,7 @@ AppData/Roaming/Code/User/settings.json
 {{ end }}
 {{ else }}
 AppData
+*.ps1
 {{ if eq .chezmoi.os "darwin" }}
 {{ if not .vscode }}
 Library/Application Support/Code/User/settings.json

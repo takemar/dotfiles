@@ -8,7 +8,7 @@
 {{ $shebang = true -}}
 #!/usr/bin/env bash
 {{ end }}
-mkdir -p {{ joinPath $destDir ".ssh/config.d" }}
+mkdir -p "{{ joinPath $destDir ".ssh/config.d" }}"
 {{ end -}}
 
 {{ range $host, $element := .ssh -}}
@@ -19,7 +19,7 @@ mkdir -p {{ joinPath $destDir ".ssh/config.d" }}
 #!/usr/bin/env bash
 {{ end }}
 (umask 077; echo "{{ printf "%s %s" (bitwarden "item" (printf "ssh://%s" $host)).sshKey.publicKey $host }}" > "{{ $pubKeyPath }}")
-{{ end }}
+{{ end -}}
 {{ $configPath := joinPath $destDir ".ssh" "config.d" $host -}}
 {{ if not (glob $configPath) -}}
 {{ if not $shebang -}}

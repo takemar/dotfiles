@@ -7,8 +7,12 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
 
-{{ if .bitwarden }}
+{{ if and .bitwarden .ssh }}
+{{ if and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/wsl2-ssh-agent.sock"
+{{ else }}
 export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+{{ end }}
 {{ end }}
 
 {{ if .deno }}

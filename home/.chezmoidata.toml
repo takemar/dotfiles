@@ -1,6 +1,7 @@
 bash = true
 bitwarden = false
 deno = false
+firefox = false
 nvm = false
 opam = false
 rbenv = false

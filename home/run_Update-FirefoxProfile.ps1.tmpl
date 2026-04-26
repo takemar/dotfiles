@@ -1,0 +1,21 @@
+{{ if .firefox -}}
+
+{{ $sourceUserJsPath := joinPath .chezmoi.sourceDir "../resources/firefox/user.js" -}}
+{{ $sourceUserJsContent := include $sourceUserJsPath -}}
+{{ $destDir := or .chezmoi.config.destDir .chezmoi.homeDir -}}
+{{ $profilesDir := joinPath $destDir "AppData/Roaming/Mozilla/Firefox/Profiles" -}}
+{{ $profileDirs := glob (joinPath $profilesDir "*.default-release") -}}
+{{ range $profileDir := $profileDirs -}}
+{{ $userJsPath := joinPath $profileDir "user.js" -}}
+{{ $globUserJsPath := glob $userJsPath -}}
+{{ $userJsDiff := false -}}
+{{ if $globUserJsPath -}}
+{{ if ne (include $userJsPath) $sourceUserJsContent -}}
+{{ $userJsDiff = true -}}
+{{ end -}}
+{{ end -}}
+{{ if or (not $globUserJsPath) $userJsDiff -}}
+Copy-Item "{{ $sourceUserJsPath }}" "{{ $userJsPath }}"
+{{ end -}}
+{{ end -}}
+{{ end -}}
